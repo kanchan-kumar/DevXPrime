@@ -37,6 +37,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		
+		<!-- https://mvnrepository.com/artifact/org.bitbucket.mstrobel/procyon-compilertools -->
+		<dependency>
+			<groupId>org.bitbucket.mstrobel</groupId>
+			<artifactId>procyon-compilertools</artifactId>
+			<version>0.5.36</version>
+		</dependency>
 	</dependencies>
 
 	<build>
