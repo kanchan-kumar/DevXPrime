@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.devxprime.web.exception.StorageException;
 import org.devxprime.web.exception.StorageFileNotFoundException;
 import org.devxprime.web.props.StorageProperties;
@@ -25,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
+    private static Logger logger = LogManager.getLogger(FileSystemStorageService.class);
+
 
     @Autowired
     public FileSystemStorageService(StorageProperties properties) {
@@ -35,6 +39,9 @@ public class FileSystemStorageService implements StorageService {
     public String store(MultipartFile file) {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
         try {
+            
+            logger.debug("Uploading file with fileName = " + filename);
+            
             if (file.isEmpty()) {
                 throw new StorageException("Failed to upload empty file " + filename);
             }

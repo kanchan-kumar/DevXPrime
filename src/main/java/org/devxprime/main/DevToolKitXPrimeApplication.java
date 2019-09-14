@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @ComponentScan(basePackages="org.devxprime.web.controllers, org.devxprime.web.exception, "
@@ -27,5 +29,14 @@ public class DevToolKitXPrimeApplication {
         };
     }
     
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                //registry.addMapping("/**").allowedOrigins("https://www.devprimetools.com");
+                registry.addMapping("/**").allowedOrigins("*");
+            }
+        };
+    }
 }
 
