@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.yaml.snakeyaml.external.com.google.gdata.util.common.base.PercentEscaper;
 
 @Service
 public class FileSystemStorageService implements StorageService {
