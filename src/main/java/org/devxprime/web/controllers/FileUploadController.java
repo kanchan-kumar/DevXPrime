@@ -10,6 +10,7 @@ import org.devxprime.web.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,17 +48,17 @@ public class FileUploadController {
 
 	model.addAttribute("files",
 		storageService.loadAll()
-			.map(path -> MvcUriComponentsBuilder
-				.fromMethodName(FileUploadController.class, "serveFile", path.getFileName().toString())
-				.build().toString())
-			.collect(Collectors.toList()));
+		.map(path -> MvcUriComponentsBuilder
+			.fromMethodName(FileUploadController.class, "serveFile", path.getFileName().toString())
+			.build().toString())
+		.collect(Collectors.toList()));
 
 	model.addAttribute("active_files", storageService.getTotalFileCount());
 
 	return "uploadForm";
     }
 
-    @GetMapping("/uploaded-files/{filename:.+}")
+    @GetMapping("/downloadFile/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
 
@@ -83,25 +84,46 @@ public class FileUploadController {
 	return "redirect:/upload";
     }
 
-    @PostMapping("/uploaFile")
-    public String uploadFiles(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/uploadAndDecompile")
+    @ResponseBody
+    public ResponseEntity<String> uploadAndDecompile(@RequestParam("file") MultipartFile file) {
 	try {
-	    
-	    return storageService.store(file);
+
+	    String fileName = storageService.store(file);
+	    return ResponseEntity.ok().body(decompilerService.decompile(fileName, DecompilerConst.PROCYON_MODE));
+
+	} catch (Exception e) {
+	    logger.error("Error while uploading and decompiling file = ", e);
+	    return ResponseEntity.ok().body("ERROR: " + e.getMessage());
+	}
+    }
+
+
+    @PostMapping("/uploadFile")
+    @ResponseBody
+    public ResponseEntity<String> uploadFiles(@RequestParam("file") MultipartFile file) {
+	try {
+	    return ResponseEntity.ok().body(storageService.store(file));
 	} catch (Exception e) {
 	    logger.error("Error while uploading file", e);
-	    return "ERROR: " + e.getMessage();
+	    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ERROR: " + e.getMessage());
 	}
     }
 
     @GetMapping("/decompile")
-    public String decompileJavaFiles(@RequestParam("fileName") String fileName, @RequestParam("mode") byte mode) {
+    @ResponseBody
+    public ResponseEntity<String> decompileJavaFiles(@RequestParam("fileName") String fileName, @RequestParam("mode") byte mode) {
 	try {
+	    
+	    if (! storageService.cleanup()) {
+		logger.error("Error on disk cleanup.");
+	    }
+	    
+	    return ResponseEntity.ok().body(decompilerService.decompile(fileName, DecompilerConst.PROCYON_MODE));
 
-	    return decompilerService.decompile(fileName, DecompilerConst.PROCYON_MODE);
 	} catch (Exception e) {
 	    logger.error("Error while decompiling file", e);
-	    return "ERROR: " + e.getMessage();
+	    return ResponseEntity.ok().body("ERROR: " + e.getMessage());
 	}
     }
 

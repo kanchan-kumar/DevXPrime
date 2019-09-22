@@ -1,8 +1,11 @@
 package org.devxprime.web.services;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.nio.charset.Charset;
 
+import org.apache.commons.io.FileUtils;
 import org.devxprime.web.exception.FileAlreadyExistException;
 import org.devxprime.web.exception.FileWriteException;
 import org.springframework.stereotype.Service;
@@ -24,8 +27,20 @@ public class FileReadWriteServiceImpl implements FileReadWriteService{
 			}
 			
 		} catch (Exception e) {
-			throw new FileWriteException("Got " + e.getMessage() + " while writing in file.");
+			throw new FileWriteException("ERROR: " + e.getMessage() + " while writing in file.");
 		}
+	}
+
+	@Override
+	public String readFile(File file) throws Exception {
+		
+		try {
+					
+			return FileUtils.readFileToString(file, Charset.defaultCharset());
+			
+		} catch (Exception e) {
+			throw new FileWriteException("ERROR: " + e.getMessage() + " while reading in file.");
+		}	    
 	}
 
 }

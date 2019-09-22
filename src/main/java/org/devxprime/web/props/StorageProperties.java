@@ -9,6 +9,7 @@ public class StorageProperties {
      * Folder location for storing files
      */
     private String location = "upload-dir";
+    private long maxRetainTime = 60 * 60 * 1000;
 
     public String getLocation() {
         return location;
@@ -18,4 +19,11 @@ public class StorageProperties {
         this.location = location;
     }
 
+    public long getMaxRetainTime() {
+        return maxRetainTime;
+    }
+
+    public void setMaxRetainTime(long maxRetainTime) {
+        this.maxRetainTime = maxRetainTime;
+    }
 }

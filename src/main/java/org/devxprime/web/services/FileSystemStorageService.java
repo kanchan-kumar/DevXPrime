@@ -1,6 +1,7 @@
 package org.devxprime.web.services;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -8,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Iterator;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,17 +24,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.yaml.snakeyaml.external.com.google.gdata.util.common.base.PercentEscaper;
 
 @Service
 public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
     private static Logger logger = LogManager.getLogger(FileSystemStorageService.class);
+    private StorageProperties props;
 
 
     @Autowired
     public FileSystemStorageService(StorageProperties properties) {
         this.rootLocation = Paths.get(properties.getLocation());
+        this.props = properties;
     }
 
     @Override
@@ -142,5 +147,25 @@ public class FileSystemStorageService implements StorageService {
         catch (IOException e) {
             throw new StorageException("Could not initialize storage", e);
         }
+    }
+
+    @Override
+    public boolean cleanup() {
+	
+	try {
+	    
+	    Iterator<Path> iterator = Files.list(this.rootLocation).iterator();
+	    
+	    while (iterator.hasNext()) {
+		File file = iterator.next().toFile();
+		if ((System.currentTimeMillis() - file.lastModified()) > props.getMaxRetainTime()) {
+		    file.deleteOnExit();
+		}
+	    }    
+	} catch (Exception e) {
+	    logger.error("Error in disk cleanup.", e);
+	    return false;
+	}
+	return true;
     }
 }
