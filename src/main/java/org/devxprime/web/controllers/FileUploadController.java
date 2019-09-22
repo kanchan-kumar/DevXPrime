@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +30,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Controller
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS, RequestMethod.HEAD})
 public class FileUploadController {
 
     private final StorageService storageService;
@@ -114,11 +115,11 @@ public class FileUploadController {
     @ResponseBody
     public ResponseEntity<String> decompileJavaFiles(@RequestParam("fileName") String fileName, @RequestParam("mode") byte mode) {
 	try {
-	    
+
 	    if (! storageService.cleanup()) {
 		logger.error("Error on disk cleanup.");
 	    }
-	    
+
 	    return ResponseEntity.ok().body(decompilerService.decompile(fileName, DecompilerConst.PROCYON_MODE));
 
 	} catch (Exception e) {
