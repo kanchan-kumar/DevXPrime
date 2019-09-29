@@ -30,6 +30,10 @@
 			<id>jcenter</id>
 			<url>https://jcenter.bintray.com/</url>
 		</repository>
+		<repository>
+			<id>local-repo</id>
+			<url>file:///${basedir}/jars/</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -136,18 +140,35 @@
 			<version>1.16</version>
 		</dependency>
 
-
-		<!-- Local Dependency -->
 		<dependency>
 			<groupId>jadx</groupId>
 			<artifactId>jadx.core</artifactId>
 			<version>1.0</version>
+			<scope>package</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>android</groupId>
 			<artifactId>jadx.android</artifactId>
 			<version>5.1</version>
+			<scope>package</scope>
+		</dependency>
+
+		<!-- Local Dependency -->
+		<dependency>
+			<groupId>jadx</groupId>
+			<artifactId>jadx.core</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/jars/jadx-core.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>android</groupId>
+			<artifactId>jadx.android</artifactId>
+			<version>5.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/jars/android-5.1.jar</systemPath>
 		</dependency>
 	</dependencies>
 
