@@ -13,12 +13,16 @@
 	</parent>
 	<groupId>com.devxprime</groupId>
 	<artifactId>DevToolKitXPrime</artifactId>
-	<version>0.0.1</version>
+	<version>1.1.0</version>
 	<name>DevToolKitXPrime</name>
 	<description>DevXPrime App</description>
+	<packaging>war</packaging>
+
 
 	<properties>
 		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
 	</properties>
 
 	<repositories>
@@ -138,27 +142,78 @@
 			<groupId>jadx</groupId>
 			<artifactId>jadx.core</artifactId>
 			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/jars/jadx-core.jar</systemPath>
 		</dependency>
 
 		<dependency>
 			<groupId>android</groupId>
-			<artifactId>android.clsp-data</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/jars/android-5.1.jar</systemPath>
+			<artifactId>jadx.android</artifactId>
+			<version>5.1</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+
+					<executions>
+						<execution>
+							<configuration>
+								<groupId>jadx</groupId>
+								<artifactId>jadx.core</artifactId>
+								<version>1.0</version>
+								<packaging>jar</packaging>
+								<file>${basedir}/jars/jadx-core.jar</file>
+								<generatePom>true</generatePom>
+
+							</configuration>
+							<id>install-jadx</id>
+							<goals>
+								<goal>install-file</goal>
+							</goals>
+							<phase>package</phase>
+						</execution>
+
+						<execution>
+							<configuration>
+								<groupId>android</groupId>
+								<artifactId>jadx.android</artifactId>
+								<version>5.1</version>
+								<packaging>jar</packaging>
+								<file>${basedir}/jars/android-5.1.jar</file>
+								<generatePom>true</generatePom>
+
+							</configuration>
+							<id>install-jadx-android</id>
+							<goals>
+								<goal>install-file</goal>
+							</goals>
+							<phase>package</phase>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>default-war</id>
+							<phase>install</phase>
+							<goals>
+								<goal>war</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 </project>
