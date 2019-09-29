@@ -1,1 +1,0 @@
-web: java -jar target/DevToolKitXPrime-1.1.0.jar
