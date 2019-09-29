@@ -25,10 +25,10 @@
     
     <Loggers>
         <Logger name="org.devxprime" level="debug" additivity="false">
-            <AppenderRef ref="LogToFile"/>
+            <AppenderRef ref="LogToConsole"/>
         </Logger>
         <Root level="error">
-            <AppenderRef ref="LogToFile"/>
+            <AppenderRef ref="LogToConsole"/>
         </Root>
     </Loggers>
     
