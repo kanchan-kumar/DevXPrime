@@ -176,6 +176,7 @@
 							<phase>package</phase>
 						</execution>
 
+
 						<execution>
 							<configuration>
 								<groupId>android</groupId>
