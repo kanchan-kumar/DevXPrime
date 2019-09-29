@@ -173,115 +173,38 @@
 	</dependencies>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-install-plugin</artifactId>
 
-					<executions>
-						<execution>
-							<configuration>
-								<groupId>jadx</groupId>
-								<artifactId>jadx.core</artifactId>
-								<version>1.0</version>
-								<packaging>jar</packaging>
-								<file>${basedir}/jars/jadx-core.jar</file>
-								<generatePom>true</generatePom>
-
-							</configuration>
-							<id>install-jadx</id>
-							<goals>
-								<goal>install-file</goal>
-							</goals>
-							<phase>package</phase>
-						</execution>
-
-
-						<execution>
-							<configuration>
-								<groupId>android</groupId>
-								<artifactId>jadx.android</artifactId>
-								<version>5.1</version>
-								<packaging>jar</packaging>
-								<file>${basedir}/jars/android-5.1.jar</file>
-								<generatePom>true</generatePom>
-
-							</configuration>
-							<id>install-jadx-android</id>
-							<goals>
-								<goal>install-file</goal>
-							</goals>
-							<phase>package</phase>
-						</execution>
-					</executions>
-				</plugin>
-
-				<plugin>
-					<artifactId>maven-resources-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>copy-files-on-build</id>
-							<phase>compile</phase>
-							<goals>
-								<goal>copy-resources</goal>
-							</goals>
-							<configuration>
-								<outputDirectory>${basedir}/target/DevToolKitXPrime-1.1.0/WEB-INF/lib</outputDirectory>
-								<resources>
-									<resource>
-										<directory>${basedir}/jars</directory>
-										<include>*.jar</include>
-										<filtering>false</filtering>
-									</resource>
-								</resources>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<executions>
-						<execution>
-							<phase>install</phase>
-							<goals>
-								<goal>copy</goal>
-							</goals>
-							<configuration>
-								<artifactItems>
-									<artifactItem>
-										<groupId>com.github.jsimone</groupId>
-										<artifactId>webapp-runner</artifactId>
-										<version>9.0.24.0</version>
-										<destFileName>webapp-runner.jar</destFileName>
-									</artifactItem>
-								</artifactItems>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-				</plugin>
-
-			<!--	<plugin>
-					<artifactId>maven-war-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>default-war</id>
-							<phase>install</phase>
-							<goals>
-								<goal>war</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin> -->
-			</plugins>
-		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+		<!-- <pluginManagement> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+			<artifactId>maven-install-plugin</artifactId> <executions> <execution> <configuration> 
+			<groupId>jadx</groupId> <artifactId>jadx.core</artifactId> <version>1.0</version> 
+			<packaging>jar</packaging> <file>${basedir}/jars/jadx-core.jar</file> <generatePom>true</generatePom> 
+			</configuration> <id>install-jadx</id> <goals> <goal>install-file</goal> 
+			</goals> <phase>package</phase> </execution> <execution> <configuration> 
+			<groupId>android</groupId> <artifactId>jadx.android</artifactId> <version>5.1</version> 
+			<packaging>jar</packaging> <file>${basedir}/jars/android-5.1.jar</file> <generatePom>true</generatePom> 
+			</configuration> <id>install-jadx-android</id> <goals> <goal>install-file</goal> 
+			</goals> <phase>package</phase> </execution> </executions> </plugin> <plugin> 
+			<artifactId>maven-resources-plugin</artifactId> <executions> <execution> 
+			<id>copy-files-on-build</id> <phase>compile</phase> <goals> <goal>copy-resources</goal> 
+			</goals> <configuration> <outputDirectory>${basedir}/target/DevToolKitXPrime-1.1.0/WEB-INF/lib</outputDirectory> 
+			<resources> <resource> <directory>${basedir}/jars</directory> <include>*.jar</include> 
+			<filtering>false</filtering> </resource> </resources> </configuration> </execution> 
+			</executions> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+			<artifactId>maven-dependency-plugin</artifactId> <executions> <execution> 
+			<phase>install</phase> <goals> <goal>copy</goal> </goals> <configuration> 
+			<artifactItems> <artifactItem> <groupId>com.github.jsimone</groupId> <artifactId>webapp-runner</artifactId> 
+			<version>9.0.24.0</version> <destFileName>webapp-runner.jar</destFileName> 
+			</artifactItem> </artifactItems> </configuration> </execution> </executions> 
+			</plugin> <plugin> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-maven-plugin</artifactId> 
+			</plugin> <plugin> <artifactId>maven-war-plugin</artifactId> <executions> 
+			<execution> <id>default-war</id> <phase>install</phase> <goals> <goal>war</goal> 
+			</goals> </execution> </executions> </plugin> </plugins> </pluginManagement> -->
 	</build>
 
 </project>
