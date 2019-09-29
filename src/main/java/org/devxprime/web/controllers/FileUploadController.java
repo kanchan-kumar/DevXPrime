@@ -75,7 +75,7 @@ public class FileUploadController {
 	String fileName = storageService.store(file);
 	String data;
 	try {
-	    data = decompilerService.decompile(fileName, DecompilerConst.PROCYON_MODE);
+	    data = decompilerService.decompile(fileName, DecompilerConst.JDCORE);
 	} catch (Exception e) {
 	    return "ERROR: " + e.getMessage();
 	}
@@ -91,7 +91,7 @@ public class FileUploadController {
 	try {
 
 	    String fileName = storageService.store(file);
-	    return ResponseEntity.ok().body(decompilerService.decompile(fileName, DecompilerConst.PROCYON_MODE));
+	    return ResponseEntity.ok().body(decompilerService.decompile(fileName, DecompilerConst.JDCORE));
 
 	} catch (Exception e) {
 	    logger.error("Error while uploading and decompiling file = ", e);
@@ -120,7 +120,7 @@ public class FileUploadController {
 		logger.error("Error on disk cleanup.");
 	    }
 
-	    return ResponseEntity.ok().body(decompilerService.decompile(fileName, DecompilerConst.PROCYON_MODE));
+	    return ResponseEntity.ok().body(decompilerService.decompile(fileName, mode));
 
 	} catch (Exception e) {
 	    logger.error("Error while decompiling file", e);

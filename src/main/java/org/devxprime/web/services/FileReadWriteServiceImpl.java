@@ -1,12 +1,10 @@
 package org.devxprime.web.services;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
-import org.devxprime.web.exception.FileAlreadyExistException;
 import org.devxprime.web.exception.FileWriteException;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +15,8 @@ public class FileReadWriteServiceImpl implements FileReadWriteService{
 	public void writeToFile(File file, String data) throws Exception {
 
 		if (file.exists()) {
-			throw new FileAlreadyExistException("File " + file.getName() + " already exist.");
+			//throw new FileAlreadyExistException("File " + file.getName() + " already exist.");
+		    file.delete();
 		}
 		
 		try {

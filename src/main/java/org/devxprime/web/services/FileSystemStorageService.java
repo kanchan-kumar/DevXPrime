@@ -157,7 +157,9 @@ public class FileSystemStorageService implements StorageService {
 	    
 	    while (iterator.hasNext()) {
 		File file = iterator.next().toFile();
+		logger.debug("file = " + file.getName() + ",  diff = " + (System.currentTimeMillis() - file.lastModified()));
 		if ((System.currentTimeMillis() - file.lastModified()) > props.getMaxRetainTime()) {
+		    logger.info("deleting file = " + file.getName());
 		    file.deleteOnExit();
 		}
 	    }    

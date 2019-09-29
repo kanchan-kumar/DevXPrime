@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 @ComponentScan(basePackages="org.devxprime.web.controllers, org.devxprime.web.exception, "
-		+ "org.devxprime.web.services, org.devxprime.web.props, org.devxprime.utils")
+		+ "org.devxprime.web.services, org.devxprime.web.props, org.devxprime.utils, org.devxprime.tools.decompilers")
 @EnableConfigurationProperties(StorageProperties.class)
 public class DevToolKitXPrimeApplication {
 
